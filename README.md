@@ -19,14 +19,14 @@ https://gsi-cyberjapan.github.io/○○/
 * 標高改定（2025年4月1日予定）前の点群データを使用しています。
 
 ### 表示に使用しているソフトウェア
-* 本サイトは MapLibre GL JS + DeckGL で構築しています。
+* 本サイトは [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/) + [DeckGL](https://deck.gl/) で構築しています。
 
 ### ベースマップ
 * 国土地理院における最新のベクトルタイルである、[最適化ベクトルタイル](https://github.com/gsi-cyberjapan/optimal_bvmap)をソースとした4パターン（標準地図スタイル、淡色地図スタイル、白地図スタイル、English（[多言語表記の地図](https://www.gsi.go.jp/kihonjohochousa/multilingual.html)）
-* 全国最新写真（シームレス）の画像タイル
+* [全国最新写真（シームレス）](https://maps.gsi.go.jp/development/ichiran.html#seamlessphoto)の画像タイル
 
 ### 地形の3D表現
-* 各[標高タイル](https://maps.gsi.go.jp/development/hyokochi.html)（DEM1A、5A、5B、5C、10B）をソースとして、陰影表示、段彩表示、立体表示できます。
+* 各[標高タイル](https://maps.gsi.go.jp/development/ichiran.html#dem)（DEM1A、5A、5B、5C、10B）をソースとして、陰影表示、段彩表示、立体表示できます。
 
 ## 問い合わせ先
 gsi-inad-9★gxb.mlit.go.jp （★を@に変えてご利用ください。）
