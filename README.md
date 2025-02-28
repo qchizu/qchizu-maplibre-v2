@@ -14,7 +14,7 @@ https://gsi-cyberjapan.github.io/○○/
 
 ### 点群タイル
 * 公開範囲は、2025年2月19日の刊行範囲のうち2次メッシュ「554036」「554037」の2面分（いわき市南部）です。
-* 形式は、[3DTiles(.pnts)形式（ver. 1.0）](https://www.ogc.org/publications/standard/3dtiles/)です。
+* 形式は、[3DTiles ver. 1.0 (.pnts)](https://www.ogc.org/publications/standard/3dtiles/)です。
 * 点群は計測時に得られた写真画像のRGB値で表示しています。
 * 標高改定（2025年4月1日予定）前の点群データを使用しています。
 
