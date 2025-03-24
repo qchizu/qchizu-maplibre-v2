@@ -7,7 +7,6 @@ import "maplibre-theme/icons.default.css";
 import "maplibre-theme/modern.css";
 import dynamic from "next/dynamic";
 import { Protocol } from "pmtiles";
-import { useMemo } from "react";
 import { IconContext } from "react-icons";
 import { LuPlus } from "react-icons/lu";
 import Map, { GeolocateControl, ImmutableLike, Layer, NavigationControl, ScaleControl, Source } from "react-map-gl/maplibre";
@@ -17,7 +16,6 @@ import { LayerSet } from "../../hooks/useLayers";
 import { MapDem, MapDemTint } from "../../hooks/useMapDems";
 import { CenterInfoPopover } from "./CenterInfoPopover";
 import { SearchInput } from "./SearchInput";
-import { Terrain } from "./Terrain";
 
 const PointCloudOverlay = dynamic(() => import("./PointCloudOverlay").then((mod) => mod.PointCloudOverlay), { ssr: false });
 
@@ -55,7 +53,6 @@ export const MapComponent = ({
     enableShadow,
     enableColor,
 }: MapComponentProps) => {
-    const shouldRenderTerrain = useMemo(() => enableTerrain || enableShadow, [enableTerrain, enableShadow]);
     useDem2ReliefProtocol({
         demSourceKey: mapDemSource.id,
         colorMaps: demTints,
@@ -90,21 +87,18 @@ export const MapComponent = ({
             />
 
             {/* 標高タイル(影 & 立体) */}
-            {shouldRenderTerrain && (
-                <Source
-                    id="terrain"
-                    type="raster-dem"
-                    key={`${mapDemSource.id}-terrain`}
-                    tiles={[mapDemSource.url]}
-                    maxzoom={mapDemSource.maxZoom}
-                    encoding={mapDemSource.encoding}
-                    attribution={mapDemSource.attribution}
-                    tileSize={mapDemSource.tileSize}
-                >
-                    {enableShadow && <Layer type="hillshade" paint={{ "hillshade-exaggeration": shadowOpacity }} />}
-                    {enableTerrain && <Terrain sourceId="terrain" />}
-                </Source>
-            )}
+            <Source
+                id="terrain"
+                type="raster-dem"
+                key={`${mapDemSource.id}-terrain`}
+                tiles={[mapDemSource.url]}
+                maxzoom={mapDemSource.maxZoom}
+                encoding={mapDemSource.encoding}
+                attribution={mapDemSource.attribution}
+                tileSize={mapDemSource.tileSize}
+            >
+                {enableShadow && <Layer type="hillshade" paint={{ "hillshade-exaggeration": shadowOpacity }} />}
+            </Source>
 
             {/* 標高タイル(色) */}
             {enableColor && (
