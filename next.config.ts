@@ -1,13 +1,12 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-    reactStrictMode: true,
-    basePath: '/3dpc-3dtiles',
-    assetPrefix: '/3dpc-3dtiles',
+/** @type {import('next').NextConfig} */
+const nextConfig = {
     output: "export",
+    basePath: process.env.IS_PUBLIC_REPO ? `/${process.env.REPOSITORY_NAME}` : "",
+    assetPrefix: process.env.IS_PUBLIC_REPO ? `/${process.env.REPOSITORY_NAME}/` : "",
+    base: './',
     experimental: {
         optimizePackageImports: ["@chakra-ui/react"],
     },
-};
+}
 
-export default nextConfig;
+module.exports = nextConfig
