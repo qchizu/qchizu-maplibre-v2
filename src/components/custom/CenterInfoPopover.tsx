@@ -1,6 +1,7 @@
 import { Button, DataList, Popover } from "@chakra-ui/react";
 import { useCallback, useEffect, useState } from "react";
-import { LngLat, useMap } from "react-map-gl/maplibre";
+import { LngLat } from "react-map-gl/mapbox";
+import { useMap } from "react-map-gl/maplibre";
 import { getAddressFromGeojsonTile } from "../../lib/getAddressFromGeojsonTile";
 import { getDemInfoFromDemTile } from "../../lib/getDemInfoFromDemTile";
 import { getUTMPointNameFromPoint } from "../../lib/getUTMPointNameFromPoint";
@@ -67,35 +68,35 @@ export const CenterInfoPopover = () => {
                         <DataList.Root gap={2}>
                             <DataList.Item>
                                 <DataList.ItemLabel>緯度</DataList.ItemLabel>
-                                <DataList.ItemValue aria-label="緯度">{center?.lat.toFixed(6)}</DataList.ItemValue>
+                                <DataList.ItemValue>{center?.lat.toFixed(6)}</DataList.ItemValue>
                             </DataList.Item>
                             <DataList.Item>
                                 <DataList.ItemLabel>経度</DataList.ItemLabel>
-                                <DataList.ItemValue aria-label="経度">{center?.lng.toFixed(6)}</DataList.ItemValue>
+                                <DataList.ItemValue>{center?.lng.toFixed(6)}</DataList.ItemValue>
                             </DataList.Item>
                             <DataList.Item>
                                 <DataList.ItemLabel>ズーム</DataList.ItemLabel>
-                                <DataList.ItemValue aria-label="ズーム">{zoom?.toFixed(2)}</DataList.ItemValue>
+                                <DataList.ItemValue>{zoom?.toFixed(2)}</DataList.ItemValue>
                             </DataList.Item>
                             <DataList.Item>
                                 <DataList.ItemLabel>ピッチ</DataList.ItemLabel>
-                                <DataList.ItemValue aria-label="ピッチ">{pitch?.toFixed(2)}</DataList.ItemValue>
+                                <DataList.ItemValue>{pitch?.toFixed(2)}</DataList.ItemValue>
                             </DataList.Item>
                             <DataList.Item>
                                 <DataList.ItemLabel>ベアリング</DataList.ItemLabel>
-                                <DataList.ItemValue aria-label="ベアリング">{bearing?.toFixed(2)}</DataList.ItemValue>
+                                <DataList.ItemValue>{bearing?.toFixed(2)}</DataList.ItemValue>
                             </DataList.Item>
                             <DataList.Item>
                                 <DataList.ItemLabel>付近の住所（正確な所属を示すとは限らない）</DataList.ItemLabel>
-                                <DataList.ItemValue aria-label="付近の住所">{address}</DataList.ItemValue>
+                                <DataList.ItemValue>{address}</DataList.ItemValue>
                             </DataList.Item>
                             <DataList.Item>
                                 <DataList.ItemLabel>UTMポイント</DataList.ItemLabel>
-                                <DataList.ItemValue aria-label="UTMポイント">{utmpoint}</DataList.ItemValue>
+                                <DataList.ItemValue>{utmpoint}</DataList.ItemValue>
                             </DataList.Item>
                             <DataList.Item>
                                 <DataList.ItemLabel>標高</DataList.ItemLabel>
-                                <DataList.ItemValue aria-label="標高">{demInfo}</DataList.ItemValue>
+                                <DataList.ItemValue>{demInfo}</DataList.ItemValue>
                             </DataList.Item>
                         </DataList.Root>
                     </Popover.Body>
