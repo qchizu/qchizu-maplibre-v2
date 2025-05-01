@@ -43,12 +43,12 @@ export const MapTintItem = ({ tint, colorOpacity, onChange, onDelete }: MapTintI
         <HStack w="100%" pr={1}>
             <Code>{tint.from} m~</Code>
             <Spacer />
-            <IconButton colorPalette="red" onClick={onDelete} variant="outline" size="2xs" aria-label={`色彩削除 ${tint.from}m~`}>
+            <IconButton colorPalette="red" onClick={onDelete} variant="outline" size="2xs">
                 <LuTrash2 />
             </IconButton>
             <Dialog.Root placement="center" open={dialogOpen} onOpenChange={(e) => setDialogOpen(e.open)} closeOnInteractOutside={false}>
                 <Dialog.Trigger asChild>
-                    <IconButton variant="outline" size="2xs" aria-label={`色彩編集 ${tint.from}m~`}>
+                    <IconButton variant="outline" size="2xs">
                         <LuPencil />
                     </IconButton>
                 </Dialog.Trigger>

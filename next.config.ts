@@ -1,8 +1,10 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+    reactStrictMode: true,
+    basePath: '/3dpc-3dtiles',
+    assetPrefix: '/3dpc-3dtiles',
     output: "export",
-    basePath: process.env.BASE_PATH,
     experimental: {
         optimizePackageImports: ["@chakra-ui/react"],
     },
