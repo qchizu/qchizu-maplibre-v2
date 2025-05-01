@@ -56,14 +56,14 @@ jobs:
                   name: github-pages-pr-${{ github.event.pull_request.number }}
 
     preview:
-      if: github.event.action != 'closed'
-      needs: build
-      runs-on: ubuntu-latest
+        if: github.event.action != 'closed'
+        needs: build
+        runs-on: ubuntu-latest
 
-      steps:
-        - name: Deploy to GitHub Pages (PR Preview)
-          id: deployment
-          uses: actions/deploy-pages@v4
-          with:
-            artifact_name: github-pages-pr-${{ github.event.pull_request.number }}
-            preview: true
+        steps:
+            - name: Deploy to GitHub Pages (PR Preview)
+              id: deployment
+              uses: actions/deploy-pages@v4
+              with:
+                  artifact_name: github-pages-pr-${{ github.event.pull_request.number }}
+                  preview: true
