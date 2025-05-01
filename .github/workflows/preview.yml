@@ -5,9 +5,7 @@ on:
         types: [opened, synchronize, reopened, closed]
 
 permissions:
-    contents: read
-    pages: write
-    id-token: write
+    contents: write
     pull-requests: write
 
 concurrency:
@@ -18,52 +16,99 @@ env:
     PAGE_DIR: pr-preview-${{ github.event.pull_request.number }}
 
 jobs:
-    build:
+    build-and-deploy:
         if: github.event.action != 'closed'
         runs-on: ubuntu-latest
         steps:
-            - name: Checkout
+            # 1) ソース取得＋ビルド
+            - name: Checkout source
               uses: actions/checkout@v4
-            - name: Setup Node
+
+            - name: Setup Node.js & Bun
               uses: actions/setup-node@v4
               with:
                   node-version: "20"
             - name: Setup Bun
               uses: oven-sh/setup-bun@v1
-            - name: Setup Pages
+
+            - name: Configure Pages build
               uses: actions/configure-pages@v5
               with:
                   generator_config_file: next.config.mjs
+
             - name: Restore cache
               uses: actions/cache@v4
               with:
-                  path: |
-                      .next/cache
-                  key: ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lockb') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+                  path: .next/cache
+                  key: ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lockb') }}-${{ hashFiles('**/*.[jt]s?(x)') }}
                   restore-keys: |
-                      ${{ runner.os }}-nextjs-${{ hashFiles('**/bun.lockb') }}-
+                      ${{ runner.os }}-nextjs-
+
             - name: Install dependencies
               run: bun install
+
             - name: Build with Next.js
               run: |
                   export IS_PREVIEW=true
                   export PR_NUMBER=${{ github.event.pull_request.number }}
-                  BASE_PATH=/${{ env.PAGE_DIR }} bunx next build
-            - name: Upload artifact
-              uses: actions/upload-pages-artifact@v3
-              with:
-                  path: ./out
-                  name: github-pages-pr-${{ github.event.pull_request.number }}
+                  export BASE_PATH=/${{ env.PAGE_DIR }}
+                  bunx next build
 
-    preview:
-        if: github.event.action != 'closed'
-        needs: build
+            - name: Move build output
+              run: mv out /tmp/out
+
+            # 2) gh-pages ブランチへコミット
+            - name: Checkout gh-pages branch
+              uses: actions/checkout@v4
+              with:
+                  ref: gh-pages
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  fetch-depth: 0
+
+            - name: Deploy PR preview to gh-pages
+              run: |
+                  # 古いプレビューを削除
+                  rm -rf ${{ env.PAGE_DIR }} || true
+                  # 新しいビルド成果物をコピー
+                  mkdir -p ${{ env.PAGE_DIR }}
+                  cp -R /tmp/out/* ${{ env.PAGE_DIR }}
+
+                  # Git 設定＆コミット
+                  git config user.name "GitHub Actions"
+                  git config user.email "action@github.com"
+                  git add ${{ env.PAGE_DIR }}
+                  git commit -m "Deploy PR preview for #${{ github.event.pull_request.number }}" || echo "No changes to commit"
+                  git push origin gh-pages
+
+            # 3) PR にコメントで URL を共有
+            - name: Comment PR with preview URL
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const url = `https://${context.repo.owner}.github.io/${context.repo.repo}/${process.env.PAGE_DIR}/`;
+                      github.rest.issues.createComment({
+                        issue_number: context.issue.number,
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        body: `🔗 PR Preview: ${url}`
+                      })
+
+    cleanup:
+        if: github.event.action == 'closed'
         runs-on: ubuntu-latest
-
         steps:
-            - name: Deploy to GitHub Pages (PR Preview)
-              id: deployment
-              uses: actions/deploy-pages@v4
+            # クローズ時にプレビュー用ディレクトリを丸ごと削除
+            - name: Checkout gh-pages branch
+              uses: actions/checkout@v4
               with:
-                  artifact_name: github-pages-pr-${{ github.event.pull_request.number }}
-                  preview: true
+                  ref: gh-pages
+                  token: ${{ secrets.GITHUB_TOKEN }}
+                  fetch-depth: 0
+
+            - name: Remove PR preview directory
+              run: |
+                  git rm -rf ${{ env.PAGE_DIR }} || true
+                  git config user.name "GitHub Actions"
+                  git config user.email "action@github.com"
+                  git commit -m "Remove PR preview for #${{ github.event.pull_request.number }}" || echo "No changes to commit"
+                  git push origin gh-pages
