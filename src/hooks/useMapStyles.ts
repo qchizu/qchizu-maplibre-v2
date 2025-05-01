@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { ImmutableLike } from "react-map-gl/maplibre";
-import nextConfig from "../../next.config";
 
 export interface MapStyle {
     id: string;
@@ -10,32 +9,12 @@ export interface MapStyle {
     icon?: string;
 }
 
-const basePath = nextConfig.basePath || "";
-
 const DEFAULT_MAP_STYLES: MapStyle[] = [
-    { id: "std-3d", name: "標準地図", style: `${basePath}/styles/std.json`, icon: `${basePath}/images/std.png`, deletable: false },
-    { id: "pale-3d", name: "淡色地図", style: `${basePath}/styles/pale.json`, icon: `${basePath}/images/pale.png`, deletable: false },
-    {
-        id: "skeleton",
-        name: "白地図",
-        style: `${basePath}/styles/skeleton.json`,
-        icon: `${basePath}/images/skeleton.png`,
-        deletable: false,
-    },
-    {
-        id: "english",
-        name: "English",
-        style: `${basePath}/styles/std-english.json`,
-        icon: `${basePath}/images/std-english.png`,
-        deletable: false,
-    },
-    {
-        id: "seamlessphoto",
-        name: "写真",
-        style: `${basePath}/styles/seamlessphoto.json`,
-        icon: `${basePath}/images/seamlessphoto.png`,
-        deletable: false,
-    },
+    { id: "std-3d", name: "標準地図", style: `/3dpc-3dtiles/styles/std.json`, icon: "/3dpc-3dtiles/images/std.png", deletable: false },
+    { id: "pale-3d", name: "淡色地図", style: `/3dpc-3dtiles/styles/pale.json`, icon: "/3dpc-3dtiles/images/pale.png", deletable: false },
+    { id: "skeleton", name: "白地図", style: `/3dpc-3dtiles/styles/skeleton.json`, icon: "/3dpc-3dtiles/images/skeleton.png", deletable: false },
+    { id: "english", name: "English", style: `/3dpc-3dtiles/styles/std-english.json`, icon: "/3dpc-3dtiles/images/std-english.png", deletable: false },
+    { id: "seamlessphoto", name: "写真", style: "/3dpc-3dtiles/styles/seamlessphoto.json", icon: "/3dpc-3dtiles/images/seamlessphoto.png", deletable: false },
 ];
 
 export const useMapStyles = () => {
