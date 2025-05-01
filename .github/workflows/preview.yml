@@ -36,7 +36,7 @@ jobs:
             - name: Configure Pages build
               uses: actions/configure-pages@v5
               with:
-                  generator_config_file: next.config.mjs
+                  generator_config_file: next.config.ts
 
             - name: Install dependencies
               run: bun install
@@ -46,7 +46,6 @@ jobs:
                   export IS_PREVIEW=true
                   export PR_NUMBER=${{ github.event.pull_request.number }}
                   export BASE_PATH=/${{ env.PAGE_DIR }}
-                  # next.config.mjs 側で output: "export" が有効な前提
                   bunx next build
 
             - name: Move build output
