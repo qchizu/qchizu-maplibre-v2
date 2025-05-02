@@ -13,28 +13,28 @@ export interface MapStyle {
 const basePath = nextConfig.basePath || "";
 
 const getAbsoluteUrl = (path: string) => {
-    if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+    if (typeof window !== "undefined" && window.location.hostname === "localhost") {
         return `${basePath}${path}`;
     }
-    
-    const repoName = '3dpc-3dtiles';
+
+    const repoName = "3dpc-3dtiles";
     return `https://gsi-cyberjapan.github.io/${repoName}${path}`;
 };
 
 const DEFAULT_MAP_STYLES: MapStyle[] = [
-    { 
-        id: "std-3d", 
-        name: "標準地図", 
-        style: getAbsoluteUrl("/styles/std.json"), 
-        icon: `${basePath}/images/std.png`, 
-        deletable: false 
+    {
+        id: "std-3d",
+        name: "標準地図",
+        style: getAbsoluteUrl("/styles/std.json"),
+        icon: `${basePath}/images/std.png`,
+        deletable: false,
     },
-    { 
-        id: "pale-3d", 
-        name: "淡色地図", 
-        style: getAbsoluteUrl("/styles/pale.json"), 
-        icon: `${basePath}/images/pale.png`, 
-        deletable: false 
+    {
+        id: "pale-3d",
+        name: "淡色地図",
+        style: getAbsoluteUrl("/styles/pale.json"),
+        icon: `${basePath}/images/pale.png`,
+        deletable: false,
     },
     {
         id: "skeleton",
