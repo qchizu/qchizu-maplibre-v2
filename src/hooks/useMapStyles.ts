@@ -12,27 +12,43 @@ export interface MapStyle {
 
 const basePath = nextConfig.basePath || "";
 
+const getStyleUrl = (path: string) => {
+    return `${basePath}${path}`;
+};
+
 const DEFAULT_MAP_STYLES: MapStyle[] = [
-    { id: "std-3d", name: "標準地図", style: `${basePath}/styles/std.json`, icon: `${basePath}/images/std.png`, deletable: false },
-    { id: "pale-3d", name: "淡色地図", style: `${basePath}/styles/pale.json`, icon: `${basePath}/images/pale.png`, deletable: false },
+    { 
+        id: "std-3d", 
+        name: "標準地図", 
+        style: getStyleUrl("/styles/std.json"), 
+        icon: `${basePath}/images/std.png`, 
+        deletable: false 
+    },
+    { 
+        id: "pale-3d", 
+        name: "淡色地図", 
+        style: getStyleUrl("/styles/pale.json"), 
+        icon: `${basePath}/images/pale.png`, 
+        deletable: false 
+    },
     {
         id: "skeleton",
         name: "白地図",
-        style: `${basePath}/styles/skeleton.json`,
+        style: getStyleUrl("/styles/skeleton.json"),
         icon: `${basePath}/images/skeleton.png`,
         deletable: false,
     },
     {
         id: "english",
         name: "English",
-        style: `${basePath}/styles/std-english.json`,
+        style: getStyleUrl("/styles/std-english.json"),
         icon: `${basePath}/images/std-english.png`,
         deletable: false,
     },
     {
         id: "seamlessphoto",
         name: "写真",
-        style: `${basePath}/styles/seamlessphoto.json`,
+        style: getStyleUrl("/styles/seamlessphoto.json"),
         icon: `${basePath}/images/seamlessphoto.png`,
         deletable: false,
     },
