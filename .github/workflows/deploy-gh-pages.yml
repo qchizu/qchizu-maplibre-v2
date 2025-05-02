@@ -2,7 +2,10 @@ name: Deploy to GitHub Pages
 
 on:
     push:
-        branches: ["main"]
+        # branches: ["main"]
+        # 全てのブランチで動作させる場合はbranches指定を削除
+        # もしくは下記のようにワイルドカードを使うことも可能
+        branches: ["**"]
     workflow_dispatch:
 
 permissions:
