@@ -1,0 +1,39 @@
+name: Receive and sync target files
+on:
+    repository_dispatch:
+        types: [target-updated]
+permissions:
+    contents: write
+jobs:
+    sync-target:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout receiving repo
+              uses: actions/checkout@v3
+              with:
+                  persist-credentials: true
+            - name: Clone source repo
+              uses: actions/checkout@v3
+              with:
+                  repository: gsimaps-cicd/3dpc-3dtiles
+                  token: ${{ secrets.AUTOMERGE_GITHUB_TOKEN }}
+                  path: source-repo
+                  ref: main
+            - name: Copy updated files with rsync
+              run: |
+                  echo "${{ github.event.client_payload.changed_files }}" \
+                    | tr ',' '\n' > files.txt
+                  rsync -av --files-from=files.txt source-repo/ .
+            - name: Remove nested git metadata
+              run: rm -rf source-repo
+            - name: Configure Git user
+              run: |
+                  git config user.name "github-actions[bot]"
+                  git config user.email "github-actions[bot]@users.noreply.github.com"
+
+            - name: Commit and push to main
+              run: |
+                  git add .
+                  git diff --cached --quiet || git commit -m "🛠 Sync target files from upstream"
+                  git push origin main
