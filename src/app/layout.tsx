@@ -6,7 +6,10 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-    title: "点群タイル閲覧サイト 試験公開",
+    title: "全国Q地図NEXT",
+    icons: {
+        icon: "https://maps.qchizu.xyz/favicon.ico",
+    },
 };
 
 export default function RootLayout(props: { children: React.ReactNode }) {

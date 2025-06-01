@@ -36,11 +36,11 @@
         "defaultExaggeration": 0.8
     },
     "gsidem1A": {
-        "name": "DEM1A",
-        "tiles": ["reliefGsidem1A://https://cyberjapandata.gsi.go.jp/xyz/dem1a_png/{z}/{x}/{y}.png"],
+        "name": "DEM1A(Q地図)",
+        "tiles": ["reliefGsidem1A://https://mapdata.qchizu.xyz/03_dem/52_gsi/all_2025/1_01/{z}/{x}/{y}.png"],
         "encoding": "gsi",
         "attribution": "<a href='https://www.gsi.go.jp/' target='_blank'>&copy; GSI Japan</a>",
-        "url": "https://cyberjapandata.gsi.go.jp/xyz/dem1a_png/{z}/{x}/{y}.png",
+        "url": "https://mapdata.qchizu.xyz/03_dem/52_gsi/all_2025/1_01/{z}/{x}/{y}.png",
         "maxZoom": 17,
         "defaultExaggeration": 0.8
     }
